@@ -17,16 +17,18 @@ namespace Console_ExecutePhyton
                                                     new persona(1, "eduardo", "mora",10)
             };
 
-            var file = File.ReadAllText("hola.py");
             //Console.WriteLine("*****Saludo******");
             //pyrpogram.Saludo("Gerald Gonzalez");
-
-
 
             //Console.WriteLine("*****Lista enviada e iterada en python******");
             //pyrpogram.Lista(listapersonas);
 
+            FilterFieldDynamics(listapersonas);
+        }
 
+        private static void FilterFieldDynamics(List<persona> listapersonas)
+        {
+            var file = File.ReadAllText("hola.py");
             Console.WriteLine("cree el filtro con los campos: age, name y lastname");
             var field = Console.ReadLine();
             Console.WriteLine($"digite el valor del campo {field} = ");
@@ -36,7 +38,7 @@ namespace Console_ExecutePhyton
             File.Delete("hola.py");
             File.WriteAllText("hola.py", file);
 
-            dynamic pyrpogram = EngynePython("hola.py");
+            dynamic pyrpogram = CreateEngynePython("hola.py");
 
             Console.WriteLine("*****Lista enviada y filtrada en python******");
             var _listfiler = pyrpogram.ListaFiltrada(listapersonas);
@@ -55,7 +57,7 @@ namespace Console_ExecutePhyton
             }
         }
 
-        private static dynamic EngynePython(string filepath)
+        private static dynamic CreateEngynePython(string filepath)
         {
             var py = Python.CreateRuntime();
 
