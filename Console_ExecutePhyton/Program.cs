@@ -17,13 +17,15 @@ namespace Console_ExecutePhyton
                                                     new persona(1, "eduardo", "mora",10)
             };
 
+
+            //dynamic pyrpogram = CreateEngynePython("hola.py");
             //Console.WriteLine("*****Saludo******");
             //pyrpogram.Saludo("Gerald Gonzalez");
 
             //Console.WriteLine("*****Lista enviada e iterada en python******");
             //pyrpogram.Lista(listapersonas);
 
-            FilterFieldDynamics(listapersonas);
+           FilterFieldDynamics(listapersonas);
         }
 
         private static void FilterFieldDynamics(List<persona> listapersonas)

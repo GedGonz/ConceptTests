@@ -13,7 +13,6 @@ def Lista(lista):
         print("Appelido: "+element.lastname)
 
 
-
 def ListaFiltrada(lista):
 
    lista2 = filter(lambda c :c.*field*==*value*, lista)

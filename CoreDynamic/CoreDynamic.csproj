@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="fileJSON\" />
+    <PackageReference Include="MathParser.org-mXparser" Version="4.4.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
   </ItemGroup>
 
 </Project>
