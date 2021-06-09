@@ -17,12 +17,14 @@ namespace CoreDynamic
         {
 
         }
-        public Formula(int id, string name, string expresion)
+        public Formula(int id, string name, string expresion, int positionId)
         {
             this.id = id;
             this.name = name;
             this.expresion = expresion;
+            this.PositionId = positionId;
             variables = new List<Variable>();
+
         }
 
         public int id { get; private set; }
@@ -31,6 +33,7 @@ namespace CoreDynamic
         private List<Variable> variables { get; set; }
         private IMathResolve resolve { get; set; }
         private string formula { get; set; }
+        public int PositionId { get; set; }
         public void addVariable(Variable variable) 
         {
             variables.Add(variable);
@@ -68,7 +71,6 @@ namespace CoreDynamic
 
         public decimal calculateFormula<T>(T data)
         {
-
             var field = getField();
             var properties = getProperties(data, field);
             changeValuefromFieldCriterio(data, properties);

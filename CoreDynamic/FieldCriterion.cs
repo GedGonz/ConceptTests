@@ -6,14 +6,11 @@
         {
 
         }
-        public FieldCriterion(int id, string name, decimal value)
+        public FieldCriterion( string name)
         {
-            this.id = id;
             this.name = name;
-            this.value = value;
         }
 
-        public int id { get; set; }
         public string name { get; private set; }
         public decimal value { get; private set; }
 

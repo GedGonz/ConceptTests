@@ -16,13 +16,14 @@ namespace UnitTests
     public partial class FormulaShould
     {
         Formula _formula = null;
+        List<Formula> _Listformula;
         public FormulaShould()
         {
 
             var operadorMenorQue = new Operator("<");
             var operadorMayorIgualQue = new Operator(">=");
 
-            var campoCriterio1 = new FieldCriterion(1, "Cantidad_Contratos", 0);//4
+            var campoCriterio1 = new FieldCriterion("Cantidad_Contratos");//4
 
             var range1 = new Rank(1, operadorMenorQue, 1, 0.5M);
 
@@ -51,7 +52,7 @@ namespace UnitTests
             PorcentajeComision.isRank();
             PorcentajeComision.addRanks(new List<Rank>() { range1, range2, range3, range4, range5 });
 
-            var campoCriterio2 = new FieldCriterion(1, "Porcentaje_Persistencia", 0);//0.8
+            var campoCriterio2 = new FieldCriterion("Porcentaje_Persistencia");//0.8
 
             var range21 = new Rank(1, operadorMenorQue, 0.70M, 0.5M);
             range21.isPorcentage();
@@ -73,22 +74,30 @@ namespace UnitTests
             PorcentajePersistencia.isRank();
             PorcentajePersistencia.addRanks(new List<Rank>() { range21, range22, range23, range24 });
 
-            var campoCriterio31 = new FieldCriterion(1, "Cantidad_Contratos", 0);//4
+            var campoCriterio31 = new FieldCriterion( "Cantidad_Contratos");//4
 
             var expresion = new VariableExpression("Cantidad_Contratos*0.5", new List<FieldCriterion>() { campoCriterio31 });
 
             var PorcentajeSegundoPago = new Variable(1, "PorcentajeSegundoPago", expresion);
             PorcentajeSegundoPago.isCriterion();
             
-            _formula = new Formula(1, "Calculo de Persistencia", "PorcentajeComision*PorcentajePersistencia*PorcentajeSegundoPago");
-            
+            _formula = new Formula(1, "Calculo de Comision 1", "PorcentajeComision*PorcentajePersistencia*PorcentajeSegundoPago",1);
+            var _formula2 = new Formula(2, "Calculo de Comision 2", "PorcentajeComision+PorcentajePersistencia+PorcentajeSegundoPago", 2);
+
             _formula.addVariable(PorcentajeComision);
             _formula.addVariable(PorcentajePersistencia);
             _formula.addVariable(PorcentajeSegundoPago);
+
+            _formula2.addVariable(PorcentajeComision);
+            _formula2.addVariable(PorcentajePersistencia);
+            _formula2.addVariable(PorcentajeSegundoPago);
+
+            _Listformula= new List<Formula>() { _formula, _formula2 };
         }
         [Fact]
         public void verifyValueFor_Formula()
         {
+            _formula.setMathResolve(new MathXParserResolve());
             var resultado= _formula.resolveFormula();
 
             resultado.Should().Be(1.12M);
@@ -106,11 +115,11 @@ namespace UnitTests
 
             var listatablas = new List<tabla>() { tabla_Contratos, tabla_Persistencia, tabla_SegundoPago };
 
-            var pedro = new Persona(1,"pedro","garcias","asesor");
-            var alexander = new Persona(2, "alexander", "garcias", "asesor");
-            var gerald = new Persona(3, "gerald", "garcias", "asesor");
-            var carlos = new Persona(4, "carlos", "garcias", "asesor");
-            var maria = new Persona(5, "maria", "garcias", "asesor");
+            var pedro = new Persona(1,"pedro","garcias","asesor",1);
+            var alexander = new Persona(2, "alexander", "garcias", "asesor",1);
+            var gerald = new Persona(3, "gerald", "garcias", "asesor",1);
+            var carlos = new Persona(4, "carlos", "garcias", "asesor",2);
+            var maria = new Persona(5, "maria", "garcias", "asesor",2);
 
             var pedro_antiguedad = new Antiguedad(1, "descripcion1", 10, pedro);
             var alexander_antiguedad = new Antiguedad(2, "descripcion1", 0, alexander);
@@ -167,10 +176,87 @@ namespace UnitTests
                           ).ToList();
 
 
-
-            //resultado.Should().Be(1.12M);
         }
 
-       
+        [Fact]
+        public void verifyFormula_with_ListFormula()
+        {
+            var Fecha_inicial = DateTime.Now.AddDays(-2);
+            var Fecha_final = DateTime.Now;
+
+            var tabla_Contratos = new tabla(1, "contratos", new List<Campo>() { new Campo(1, "Cantidad_Contratos"), new Campo(1, "Cantidad_x") });
+            var tabla_Persistencia = new tabla(1, "persistencia", new List<Campo>() { new Campo(1, "Porcentaje"), new Campo(1, "OtroCampo") });
+            var tabla_SegundoPago = new tabla(1, "segundopago", new List<Campo>() { new Campo(1, "Porcentaje"), new Campo(1, "OtroCampo") });
+
+            var listatablas = new List<tabla>() { tabla_Contratos, tabla_Persistencia, tabla_SegundoPago };
+
+            var pedro = new Persona(1, "pedro", "garcias", "asesor", 1);
+            var alexander = new Persona(2, "alexander", "garcias", "asesor", 1);
+            var gerald = new Persona(3, "gerald", "garcias", "asesor", 1);
+            var carlos = new Persona(4, "carlos", "garcias", "asesor", 2);
+            var maria = new Persona(5, "maria", "garcias", "asesor", 2);
+
+            var pedro_antiguedad = new Antiguedad(1, "descripcion1", 10, pedro);
+            var alexander_antiguedad = new Antiguedad(2, "descripcion1", 0, alexander);
+            var gerald_antiguedad = new Antiguedad(3, "descripcion1", 5, gerald);
+            var carlos_antiguedad = new Antiguedad(4, "descripcion1", 2, carlos);
+            var cmaria_antiguedad = new Antiguedad(5, "descripcion1", 7, maria);
+
+
+            var persistencia_pedro = new Persistencia(1, pedro, 0.1M, 1, 2021, Fecha_inicial, Fecha_final, 5, 5);
+            var persistencia_alexander = new Persistencia(1, alexander, 0.8M, 1, 2021, Fecha_inicial, Fecha_final, 2, 1);
+            var persistencia_gerald = new Persistencia(1, gerald, 0.5M, 1, 2021, Fecha_inicial, Fecha_final, 10, 5);
+            var persistencia_carlos = new Persistencia(1, carlos, 0.2M, 1, 2021, Fecha_inicial, Fecha_final, 2, 2);
+            var persistencia_maria = new Persistencia(1, maria, 0.9M, 1, 2021, Fecha_inicial, Fecha_final, 10, 9);
+
+
+            var segundo_pedro = new SegundoPago(1, pedro, 0.2M, 1, 2021, Fecha_inicial, Fecha_final, 5, 5);
+            var segundo_alexander = new SegundoPago(1, alexander, 0.7M, 1, 2021, Fecha_inicial, Fecha_final, 2, 1);
+            var segundo_gerald = new SegundoPago(1, gerald, 0.3M, 1, 2021, Fecha_inicial, Fecha_final, 10, 5);
+            var segundo_carlos = new SegundoPago(1, carlos, 0.5M, 1, 2021, Fecha_inicial, Fecha_final, 2, 2);
+            var psegundo_maria = new SegundoPago(1, maria, 0.4M, 1, 2021, Fecha_inicial, Fecha_final, 10, 9);
+
+            var Lista_Antiguedad = new List<Antiguedad>() { pedro_antiguedad, alexander_antiguedad, gerald_antiguedad, carlos_antiguedad, cmaria_antiguedad };
+            var Lista_Persistencia = new List<Persistencia>() { persistencia_pedro, persistencia_alexander, persistencia_gerald, persistencia_carlos, persistencia_maria };
+            var Lista_SegundoPago = new List<SegundoPago>() { segundo_pedro, segundo_alexander, segundo_gerald, segundo_carlos, psegundo_maria };
+
+            _Listformula.ForEach(x => {
+                x.setMathResolve(new MathXParserResolve());
+            });
+
+            var Listdata = (from a in Lista_Antiguedad
+                            join p in Lista_Persistencia on a.persona.Id equals p.persona.Id
+                            join s in Lista_SegundoPago on p.persona.Id equals s.persona.Id
+                            select new DataRepositorio
+                            {
+
+                                nombre = a.persona.Nombre,
+                                CargoId=a.persona.IdCargo,
+                                Porcentaje_Persistencia = p.Porcentaje,
+                                porcentaje_segundoPago = s.Porcentaje,
+                                Cantidad_Contratos = s.Cantidad_Contratos,
+                                Cantidad_Solventes = s.Contratos_Solventes
+                            }
+                       ).ToList();
+
+
+            var result = (from x in Listdata                           
+                          select new DataRepositorio
+                          {
+                              nombre = x.nombre,
+                              CargoId=x.CargoId,
+                              Porcentaje_Persistencia = x.Porcentaje_Persistencia,
+                              porcentaje_segundoPago = x.porcentaje_segundoPago,
+                              Cantidad_Contratos = x.Cantidad_Contratos,
+                              Cantidad_Solventes = x.Cantidad_Solventes,
+                              comision = x.Cantidad_Solventes * (_Listformula.FirstOrDefault(f=>f.PositionId==x.CargoId).calculateFormula(x)),
+                              formula = _Listformula.FirstOrDefault(f => f.PositionId == x.CargoId).getFormula()
+                          }
+                          ).ToList();
+
+
+        }
+
+
     }
 }

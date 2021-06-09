@@ -20,7 +20,7 @@ namespace UnitTests
             var operadorMenorQue = new Operator("<");
             var operadorMayorIgualQue = new Operator(">=");
 
-            var campoCriterio = new FieldCriterion(1, "CantidadContratoMix", 4);
+            var campoCriterio = new FieldCriterion("CantidadContratoMix");
 
             var range1 = new Rank(1, operadorMenorQue, 1, 0.0M);
             var range2 = new Rank(1, operadorMenorQue, 5, 0.8M);
@@ -60,8 +60,8 @@ namespace UnitTests
         public void verifyValueForFormula()
         {
             
-            var campoCriterio1 = new FieldCriterion(1, "PorcentajeComision",0.8M);
-            var campoCriterio2 = new FieldCriterion(1, "MultiplicadorPersitencia", 0.1M);
+            var campoCriterio1 = new FieldCriterion("PorcentajeComision");
+            var campoCriterio2 = new FieldCriterion("MultiplicadorPersitencia");
 
             var expresion = new VariableExpression("PorcentajeComision*MultiplicadorPersitencia*70", new List<FieldCriterion>() { campoCriterio1,campoCriterio2});
 
