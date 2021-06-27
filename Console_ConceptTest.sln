@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicLinq", "DynamicLinq\DynamicLinq.csproj", "{3348C8AD-248A-4387-A590-1D5EA26A9892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreDynamic", "CoreDynamic\CoreDynamic.csproj", "{19CECF1C-3282-4F2F-BFA6-73239109E7EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDynamic", "CoreDynamic\CoreDynamic.csproj", "{19CECF1C-3282-4F2F-BFA6-73239109E7EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mocks", "Moq\Mocks.csproj", "{F72E06A7-44EF-4ABE-98A8-9271306DD090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{19CECF1C-3282-4F2F-BFA6-73239109E7EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19CECF1C-3282-4F2F-BFA6-73239109E7EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CECF1C-3282-4F2F-BFA6-73239109E7EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F72E06A7-44EF-4ABE-98A8-9271306DD090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72E06A7-44EF-4ABE-98A8-9271306DD090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72E06A7-44EF-4ABE-98A8-9271306DD090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F72E06A7-44EF-4ABE-98A8-9271306DD090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
