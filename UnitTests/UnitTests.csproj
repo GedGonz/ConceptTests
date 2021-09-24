@@ -26,6 +26,7 @@
     <ProjectReference Include="..\CoreDynamic\CoreDynamic.csproj" />
     <ProjectReference Include="..\DynamicLinq\DynamicLinq.csproj" />
     <ProjectReference Include="..\Moq\Mocks.csproj" />
+    <ProjectReference Include="..\TestIneterview\TestIneterview.csproj" />
   </ItemGroup>
 
 </Project>
