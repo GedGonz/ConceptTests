@@ -8,10 +8,10 @@ namespace TestIneterview
 {
     public class CountWords
     {
-        public Dictionary<string, int> getCountWords() {
+        public Dictionary<string, int> getCountWords(string[] words) {
 
             var dictornatyCountWord = new Dictionary<string, int>();
-            var words =new [] { "javascript","C#","C++","JAVA","Ruby", "javascript", "javascript","JAVA","C#" };
+            
 
             for (var i=0; i<words.Length; i++) {
 
