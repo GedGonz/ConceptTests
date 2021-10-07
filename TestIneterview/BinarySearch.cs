@@ -11,9 +11,9 @@ namespace TestIneterview
         public int Search(int []array, int findNumber) {
 
             var min = 0;
-            var max = array.Length;
+            var max = array.Length -1;
             
-            while (max>0) {
+            while (max>=min) {
 
                 var mid = (min + max) / 2;     //tomo el indice de en medio del array
 
